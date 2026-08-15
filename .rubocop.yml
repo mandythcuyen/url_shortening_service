@@ -6,3 +6,195 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
+
+# Merge Exclude lists from inherited config
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  NewCops: enable
+  Include:
+    - "app/**/*.rb"
+    - "lib/**/*.rb"
+  Exclude:
+    - "**/vendor/**/*"
+    - "**/node_modules/**/*"
+
+Lint:
+  Enabled: true
+Lint/MissingSuper:
+  Enabled: false
+
+Style/CaseEquality:
+  AllowOnConstant: true
+  AllowOnSelfClass: true
+
+Layout/SpaceAfterComma:
+  Enabled: true
+Layout/SpaceAfterColon:
+  Enabled: true
+Layout/ParameterAlignment:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+  SupportedStyles:
+    - with_first_parameter
+    - with_fixed_indentation
+Layout/ArgumentAlignment:
+  Enabled: true
+  EnforcedStyle: with_first_argument
+Layout/AssignmentIndentation:
+  Enabled: true
+Layout/DefEndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: start_of_line
+Layout/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: variable
+Layout/ElseAlignment:
+  Enabled: true
+Layout/InitialIndentation:
+  Enabled: true
+Layout/AccessModifierIndentation:
+  Enabled: true
+Layout/CaseIndentation:
+  EnforcedStyle: end
+Layout/EmptyLines:
+  Enabled: true
+Layout/EmptyLineAfterGuardClause:
+  Enabled: true
+Layout/EmptyLineBetweenDefs:
+  Enabled: true
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
+Layout/LineLength:
+  Enabled: false
+Layout/SpaceAroundBlockParameters:
+  EnforcedStyleInsidePipes: no_space
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: space
+Layout/SpaceAroundKeyword:
+  Enabled: true
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Layout/SpaceAroundOperators:
+  Enabled: true
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyle: space
+Layout/SpaceInLambdaLiteral:
+  Enabled: true
+  EnforcedStyle: require_no_space
+Layout/SpaceInsideArrayPercentLiteral:
+  Enabled: true
+Layout/SpaceBeforeSemicolon:
+  Enabled: true
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+  EnforcedStyle: space
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+  EnforcedStyle: space
+Layout/SpaceInsideParens:
+  Enabled: true
+  EnforcedStyle: no_space
+Layout/TrailingWhitespace:
+  Enabled: true
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: aligned
+  IndentationWidth: null
+Layout/HashAlignment:
+  Enabled: true
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+Layout/MultilineAssignmentLayout:
+  Enabled: true
+  EnforcedStyle: new_line
+  SupportedTypes:
+    - block
+    - case
+    - class
+    - if
+Layout/MultilineBlockLayout:
+  Enabled: true
+Layout/RescueEnsureAlignment:
+  Enabled: true
+Layout/SpaceAfterNot:
+  Enabled: true
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: true
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: true
+Layout/SpaceInsideRangeLiteral:
+  Enabled: true
+Layout/SpaceInsideReferenceBrackets:
+  Enabled: true
+Layout/SpaceInsideStringInterpolation:
+  Enabled: true
+Layout/ConditionPosition:
+  Enabled: true
+Layout/BlockAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: start_of_line
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
+
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: true
+Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateCaseCondition:
+  Enabled: true
+Lint/DuplicateElsifCondition:
+  Enabled: true
+Lint/DuplicateMatchPattern:
+  Enabled: true
+Lint/DuplicateRescueException:
+  Enabled: true
+Lint/ElseLayout:
+  Enabled: true
+Lint/DisjunctiveAssignmentInConstructor:
+  Enabled: true
+Lint/FloatComparison:
+  Enabled: true
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+  Exclude:
+    - "spec/**/*"
+Lint/CircularArgumentReference:
+  Enabled: true
+
+Security/JSONLoad:
+  Enabled: true
+Security/MarshalLoad:
+  Enabled: true
+
+Style/ArgumentsForwarding:
+  Enabled: true
+Style/TrailingCommaInArguments:
+  Enabled: false
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: consistent_comma
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: consistent_comma
+Style/SymbolArray:
+  EnforcedStyle: percent
+Style/MethodCallWithArgsParentheses:
+  Enabled: false
+Style/RedundantFreeze:
+  Enabled: true
+Style/WordArray:
+  Enabled: true
+  EnforcedStyle: percent
+Style/MutableConstant:
+  Enabled: true
+Naming/AccessorMethodName:
+  Enabled: true
+Style/AccessorGrouping:
+  Enabled: true
+  EnforcedStyle: grouped
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true

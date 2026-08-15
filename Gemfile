@@ -67,4 +67,3 @@ group :development, :test do
   # Bullet for N+1 detection
   gem "bullet"
 end
-
