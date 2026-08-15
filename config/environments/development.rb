@@ -1,6 +1,29 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.alert         = true
+    Bullet.bullet_logger = true
+    Bullet.console       = true
+    Bullet.rails_logger  = true
+    Bullet.add_footer    = true
+  end
+
+  config.cache_store = :redis_cache_store, {
+    url: ENV.fetch('REDIS_URL', 'redis://localhost:6379/0'), 
+    namespace: 'url_shortening_service_cache',
+    connect_timeout:   30, # Timeout for connecting to Redis server (seconds)
+    read_timeout:      0.2, # Timeout for reading from Redis (seconds)
+    write_timeout:     0.2, # Timeout for writing to Redis (seconds)
+    reconnect_attempts: 1, # Number of times to attempt reconnection if failed
+    
+    error_handler: -> (method:, returning:, exception:) do
+      # Handle Redis errors (e.g., log them instead of crashing the app)
+      Rails.logger.error("Redis Cache Error: #{exception.message} on #{method}")
+    end
+  }
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.
@@ -24,7 +47,7 @@ Rails.application.configure do
   end
 
   # Change to :null_store to avoid any caching.
-  config.cache_store = :memory_store
+  # config.cache_store = :memory_store
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
