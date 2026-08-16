@@ -25,7 +25,7 @@ module Services
         return success! (payload(cached_short_code)) if cached_short_code.present?
 
         # Cache miss - check database
-        existing = ShortLink.find_by(session_token: session_token, original_url_hash: url_hash)
+        existing = ::ShortLink.find_by(session_token: session_token, original_url_hash: url_hash)
         if existing
           # Found in database, write to cache then return
           write_cache(existing)
@@ -63,7 +63,7 @@ module Services
           short_code = generate_short_code
 
           begin
-            return ShortLink.create!(session_token: session_token, original_url: url, short_code: short_code)
+            return ::ShortLink.create!(session_token: session_token, original_url: url, short_code: short_code)
           rescue ActiveRecord::RecordNotUnique
             retries += 1
             raise "Failed to create short link after maximum retries" if retries >= MAX_RETRIES

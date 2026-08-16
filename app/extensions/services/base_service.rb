@@ -25,6 +25,8 @@ module Services
     def success!(result)
       @success = true
       @result = result
+
+      @result
     end
 
     def fail!(message, debug_info = {})
@@ -35,6 +37,8 @@ module Services
 
       Rails.logger.error "#{self.class.name} error: #{@message}"
       Rails.logger.error backtrace&.join("\n")
+
+      nil
     end
   end
 end
