@@ -196,8 +196,8 @@ nano .env.production
 Fill in:
 
 - `RAILS_MASTER_KEY`: copy from your Mac.
-- `HOST`: `https://short.mandyseeyoo.com` (or your chosen domain).
-- `APP_DOMAIN`: `short.mandyseeyoo.com`.
+- `HOST`: `https://demo.mandyseeyoo.com` (or your chosen domain).
+- `APP_DOMAIN`: `demo.mandyseeyoo.com`.
 - `POSTGRES_PASSWORD`: generate randomly with `openssl rand -hex 16`.
 
 ### 3.5. First start
@@ -221,7 +221,7 @@ short  A  <lightsail-static-ip>
 ### 3.7. Verify
 
 ```bash
-curl -I https://short.mandyseeyoo.com/up
+curl -I https://demo.mandyseeyoo.com/up
 ```
 
 Expected result: `HTTP/2 200`.
