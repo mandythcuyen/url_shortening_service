@@ -16,7 +16,10 @@ class RedirectsController < ApplicationController
   # TODO: Move to concern object
   def safe_url?(url)
     uri = URI.parse(url)
-    %w[http https].include?(uri.scheme&.downcase)
+    return false unless %w[http https].include?(uri.scheme&.downcase)
+    return false if uri.host.blank?
+    return false if uri.userinfo.present? # https://user:pass@site.com
+    true
   rescue URI::InvalidURIError
     false
   end

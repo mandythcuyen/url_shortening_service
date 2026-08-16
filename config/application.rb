@@ -42,5 +42,9 @@ module UrlShorteningService
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Cookies are stripped from the API-only middleware stack, but the encode
+    # endpoint scopes short links per visitor via a signed session cookie.
+    config.middleware.use ActionDispatch::Cookies
   end
 end

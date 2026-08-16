@@ -29,8 +29,9 @@ module Services
       private
 
       def valid_format?
-        @short_code.match?(/\A[A-Za-z0-9]+\z/) &&
-        @short_code.length.between?(4, 10)
+        code = @short_code.to_s
+
+        code.match?(/\A[A-Za-z0-9]+\z/) && code.length.between?(4, 10)
       end
 
       def decode_cache_key(short_code)
