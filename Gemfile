@@ -69,4 +69,6 @@ group :development, :test do
 
   # Bullet for N+1 detection
   gem "bullet"
+
+  gem "dotenv-rails", ">= 3.2", require: "dotenv/load"
 end
