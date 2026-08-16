@@ -8,7 +8,7 @@ gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use Redis for caching and background jobs [https://redis.io/]
-gem "redis", "~> 5.0"
+gem "redis", "~> 6.0"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
