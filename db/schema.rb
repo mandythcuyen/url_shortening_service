@@ -21,7 +21,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_15_183634) do
     t.string "session_token", null: false
     t.string "short_code", limit: 10, null: false
     t.datetime "updated_at", null: false
-    t.index ["original_url", "original_url_hash"], name: "index_short_links_on_original_url_and_url_hash", unique: true
+    t.index ["session_token", "original_url_hash"], name: "index_short_links_on_session_token_and_original_url_hash", unique: true
     t.index ["short_code"], name: "index_short_links_on_short_code", unique: true
   end
 end
