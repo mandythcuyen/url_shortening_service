@@ -33,59 +33,7 @@ RSpec.configure do |config|
           },
           description: "localhost",
         },
-        {
-          url:         "https://staging.mandyseeyoo.com",
-          variables:   {
-            endPoint: {
-              default: "https://staging.mandyseeyoo.com",
-            },
-          },
-          description: "staging",
-        },
       ],
-      components: {
-        schemas: {
-          UrlPayload: {
-            type: :object,
-            properties: {
-              url: { type: :string, format: :uri, example: 'https://codesubmit.io/library/react' }
-            },
-            required: ['url']
-          },
-          EncodeResult: {
-            type: :object,
-            properties: {
-              short_code: { type: :string, example: 'GeAi9K' },
-              short_url: { type: :string, format: :uri, example: 'https://mandyseeyoo.com/GeAi9K' }
-            },
-            required: ['short_code', 'short_url']
-          },
-          DecodeResult: {
-            type: :object,
-            properties: {
-              short_code: { type: :string, example: 'GeAi9K' },
-              original_url: { type: :string, format: :uri, example: 'https://codesubmit.io/library/react' }
-            },
-            required: ['short_code', 'original_url']
-          },
-          Error: {
-            type: :object,
-            properties: {
-              error: { type: :string, example: 'Short code not found' }
-            }
-          },
-          ValidationErrors: {
-            type: :object,
-            properties: {
-              errors: {
-                type: :array,
-                items: { type: :string, example: 'URL scheme is invalid. Only http and https are allowed.' }
-              }
-            },
-            required: ['errors']
-          }
-        }
-      }
     }
   }
 

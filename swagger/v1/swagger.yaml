@@ -4,14 +4,36 @@ info:
   title: API V1
   version: v1
   description: URL shortening service
+paths:
+  "/{short_code}":
+    parameters:
+    - name: short_code
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Redirect to original URL
+      tags:
+      - Redirects
+      security:
+      - Bearer: []
+        key: []
+      parameters:
+      - name: short_code
+        in: path
+        required: true
+        description: The short code to redirect
+        schema:
+          type: string
+      responses:
+        '301':
+          description: Redirect successful
+        '404':
+          description: Unsafe URL
 servers:
 - url: http://localhost:3000
   variables:
     endPoint:
       default: http://localhost:3000
   description: localhost
-- url: https://staging.mandyseeyoo.com
-  variables:
-    endPoint:
-      default: https://staging.mandyseeyoo.com
-  description: staging

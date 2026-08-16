@@ -1,5 +1,5 @@
 require 'swagger_helper'
 
-RSpec.describe 'Api::V1::ShortLinks', 
- # TODO: Add tests
+describe 'Api::V1::ShortLinks' do
+  
 end
