@@ -9,4 +9,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  namespace :api do
+    namespace :v1 do
+      post "encode", to: "short_links#encode"
+      get "decode/:short_code", to: 'short_links#decode', constraints: { short_code: /[A-Za-z0-9]{4,10}/ }
+    end
+  end
+
+  get "/:short_code", to: "redirects#show", as: :redirect, constraints: { short_code: /[A-Za-z0-9]{4,10}/ }
 end

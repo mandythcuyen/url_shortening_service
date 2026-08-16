@@ -4,16 +4,24 @@ module Api
       def encode
         form = Api::Forms::ShortLinks::Encode.new(
           session_token: session_token_from_cookie,
-          **encode_params
+          **encode_params.to_h.symbolize_keys
         )
 
         result = Api::UseCases::ShortLinks::Encode.call(form)
         if result.success?
-          # resource = result.value!.short_link
-          # render json: json_resource_with_serializer(resource: resource)
+          render json: result.value!, status: :ok
         else
-          # render json: Errors::ActiveRecordValidation.new(result.failure, "short_links").to_hash,
-          #          status: :unprocessable_entity
+          render json: { errors: form.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+
+      def decode
+        original_url = Services::ShortLink::Decoder.new(short_code: params[:short_code]).perform
+
+        if original_url
+          render json: { original_url: original_url, short_code: params[:short_code] }, status: :ok
+        else
+          render json: { error: 'Short code not found' }, status: :not_found
         end
       end
 

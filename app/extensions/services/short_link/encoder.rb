@@ -54,7 +54,7 @@ module Services
       end
 
       def generate_short_code
-        @short_code ||= SecureRandom.alphanumeric(SHORT_CODE_LENGTH)
+        SecureRandom.alphanumeric(SHORT_CODE_LENGTH)
       end
  
       def create_with_retry
@@ -64,7 +64,7 @@ module Services
 
           begin
             return ::ShortLink.create!(session_token: session_token, original_url: url, short_code: short_code)
-          rescue ActiveRecord::RecordNotUnique
+          rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
             retries += 1
             raise "Failed to create short link after maximum retries" if retries >= MAX_RETRIES
           end

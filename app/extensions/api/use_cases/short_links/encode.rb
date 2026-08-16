@@ -15,11 +15,12 @@ module Api
         end
 
         def persist(form, **)
-          encoder = Services::ShortLink::Encoder.new(url: form.url, session_token: form.session_token)
+          encoder_service = Services::ShortLink::Encoder
+            .new(url: form.url, session_token: form.session_token)
 
-          encoder.perform
+          short_link_payload = encoder_service.perform
           
-          encoder.success? ? success(form) : failure(form)
+          encoder_service.success? ? success(short_link_payload) : failure(form)
         end
       end
     end
