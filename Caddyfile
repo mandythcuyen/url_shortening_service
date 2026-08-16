@@ -1,0 +1,11 @@
+{$APP_DOMAIN} {
+	encode zstd gzip
+
+	# Thruster listens on port 80 inside the web container. Caddy adds the
+	# X-Forwarded-Proto / X-Forwarded-Host headers that config.assume_ssl reads.
+	reverse_proxy web:80
+
+	log {
+		output stdout
+	}
+}

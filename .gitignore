@@ -7,8 +7,10 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore all environment files.
+# Ignore all environment files, except the committed templates.
 /.env*
+!/.env.example
+!/.env.production.example
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -29,5 +31,11 @@
 !/tmp/storage/.keep
 
 # Ignore key files for decrypting credentials and more.
+# config/credentials.yml.enc IS committed on purpose: it is encrypted and the
+# server needs it. Only the decryption key stays out of git.
 /config/*.key
+
+# Local scratch files
+/cookies.txt
+/brakeman.html
 

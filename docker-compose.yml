@@ -1,0 +1,87 @@
+name: url_shortening_service
+
+# Production-like stack: Caddy terminates TLS and is the only service exposed to
+# the internet, the Rails app (Thruster + Puma) sits behind it on the private
+# compose network, with Postgres for data and Redis for cache and Action Cable.
+#
+# Secrets and the served domain live in .env.production (see .env.production.example).
+#
+# Local:  docker compose up --build -d
+# Server: docker compose pull && docker compose up -d
+
+services:
+  db:
+    image: postgres:17-alpine
+    env_file:
+      - .env.production
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:8-alpine
+    command: redis-server --save 60 1 --maxmemory 128mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  web:
+    image: ${WEB_IMAGE:-ghcr.io/mandythcuyen/url_shortening_service:latest}
+    build:
+      context: .
+    env_file:
+      - .env.production
+    environment:
+      RAILS_ENV: production
+      RAILS_LOG_TO_STDOUT: "true"
+      RAILS_MAX_THREADS: 3
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - storage_data:/rails/storage
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fsS http://localhost/up || exit 1" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - .env.production
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  storage_data:
+  caddy_data:
+  caddy_config:
