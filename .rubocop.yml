@@ -1,18 +1,14 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+# Kế thừa Omakase Ruby styling cho Rails, sau đó ghi đè bằng convention cũ.
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
-
-# Merge Exclude lists from inherited config
+# Giữ merge các danh sách Exclude từ file kế thừa.
 inherit_mode:
   merge:
     - Exclude
 
 AllCops:
+  SuggestExtensions: true
   NewCops: enable
   Include:
     - "app/**/*.rb"
@@ -20,6 +16,9 @@ AllCops:
   Exclude:
     - "**/vendor/**/*"
     - "**/node_modules/**/*"
+    - "config/*.rb"
+    - "config/**/*.rb"
+    - "spec/**/*.rb"
 
 Lint:
   Enabled: true
@@ -54,6 +53,10 @@ Layout/EndAlignment:
 Layout/ElseAlignment:
   Enabled: true
 Layout/InitialIndentation:
+  Enabled: true
+Layout/IndentationWidth:
+  Enabled: true
+Layout/IndentationConsistency:
   Enabled: true
 Layout/AccessModifierIndentation:
   Enabled: true
@@ -101,7 +104,7 @@ Layout/TrailingWhitespace:
   Enabled: true
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: aligned
-  IndentationWidth: null
+  IndentationWidth: false
 Layout/HashAlignment:
   Enabled: true
   EnforcedHashRocketStyle: table

@@ -6,14 +6,9 @@ Rails.application.configure do
   config.cache_store = :redis_cache_store, {
     url: ENV.fetch("REDIS_URL"), 
     namespace: "url_shortening_service_cache",
-    connect_timeout:   5, # Timeout for connecting to Redis server (seconds)
-    read_timeout:      1, # Timeout for reading from Redis (seconds)
-    write_timeout:     1, # Timeout for writing to Redis (seconds)
-    reconnect_attempts: 3, # Number of times to attempt reconnection if failed
-    
+    reconnect_attempts: 3,
     error_handler: ->(method:, returning:, exception:) do
-      # Handle Redis errors (e.g., log them instead of crashing the app)
-      Rails.logger.error("Redis Cache Error: #{exception.message} on #{method}")
+      Rails.logger.error("Redis Cache Error: #{exception.class} - #{exception.message} on #{method}")
     end
   }
 
