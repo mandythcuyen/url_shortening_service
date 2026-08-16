@@ -39,6 +39,9 @@ gem "image_processing", "~> 1.2"
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
+# Result monad, powers the DryCases use case DSL in lib/dry_cases
+gem "dry-monads", "~> 1.9"
+
 # API documentation
 gem "rswag-api"
 gem "rswag-ui"

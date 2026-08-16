@@ -26,7 +26,9 @@ module UrlShorteningService
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets tasks])
+    # `dry_cases` is loaded explicitly in config/initializers/use_case.rb because
+    # its files must be required in a fixed order (adapters before the registry).
+    config.autoload_lib(ignore: %w[assets tasks dry_cases])
 
     # Configuration for the application, engines, and railties goes here.
     #
