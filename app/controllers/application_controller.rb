@@ -1,5 +1,5 @@
-class ApplicationController < ActionController::API
-
+class ApplicationController < ActionController::Base
+  include ActionController::Cookies
   private
 
   # Get or create a session token from cookie
