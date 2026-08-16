@@ -6,12 +6,11 @@ module Api
     module ShortLinks
       class Encode
         include ActiveModel::Model
-        
-        attr_reader :url, 
+
+        attr_reader :url,
                     :session_token,
                     :uri
 
-        
         validates_presence_of :url, :session_token
         validate :valid_url?, unless: -> { url.blank? }
 
@@ -22,12 +21,12 @@ module Api
         rescue URI::InvalidURIError
           @uri = nil
         end
-        
+
         def valid_url?
-          valid_length? && valid_format? && valid_scheme? && 
+          valid_length? && valid_format? && valid_scheme? &&
           valid_host? && no_user_info? && not_blocked_host?
         end
-        
+
         # validate URL length
         def valid_length?
           return true if @url.length <= 2048
@@ -39,7 +38,7 @@ module Api
         # validate URL format
         def valid_format?
           return true if url.match?(URI::DEFAULT_PARSER.make_regexp)
-          
+
           errors.add(:base, :invalid, message: "URL format is invalid")
           false
         end
@@ -55,7 +54,7 @@ module Api
         # validate URL host
         def valid_host?
           return true unless uri&.host&.to_s&.strip&.empty?
-          
+
           errors.add(:base, :invalid, message: "URL host is invalid")
           false
         end
@@ -63,7 +62,7 @@ module Api
         # prevent URL containing user info (username:password@), which is a security risk
         def no_user_info?
           return true if uri.userinfo.nil?
-          
+
           errors.add(:base, :invalid, message: "URL must not contain user info")
           false
         end
@@ -71,7 +70,7 @@ module Api
         # prevent URL containing blocked host
         def not_blocked_host?
           return true unless blocked_host?(uri.host)
-          
+
           errors.add(:base, :invalid, message: "URL host is blocked")
           false
         end

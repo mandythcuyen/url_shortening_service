@@ -22,23 +22,23 @@ module Services
 
     private
 
-    def success!(result)
-      @success = true
-      @result = result
+      def success!(result)
+        @success = true
+        @result = result
 
-      @result
-    end
+        @result
+      end
 
-    def fail!(message, debug_info = {})
-      @success = false
-      @message = message
-      @debug_info = debug_info
-      backtrace = debug_info.respond_to?(:backtrace) ? debug_info.backtrace : nil
+      def fail!(message, debug_info = {})
+        @success = false
+        @message = message
+        @debug_info = debug_info
+        backtrace = debug_info.respond_to?(:backtrace) ? debug_info.backtrace : nil
 
-      Rails.logger.error "#{self.class.name} error: #{@message}"
-      Rails.logger.error backtrace&.join("\n")
+        Rails.logger.error "#{self.class.name} error: #{@message}"
+        Rails.logger.error backtrace&.join("\n")
 
-      nil
-    end
+        nil
+      end
   end
 end

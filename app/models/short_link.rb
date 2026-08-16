@@ -6,14 +6,14 @@ class ShortLink < ApplicationRecord
 
   def self.hash_url(url)
     # SHA-256 → 64 characters, stable, conflict-free
-    Digest::SHA256.hexdigest(url.to_s.strip) 
+    Digest::SHA256.hexdigest(url.to_s.strip)
   end
 
   before_validation :set_original_url_hash, on: :create
 
   private
 
-  def set_original_url_hash
-    self.original_url_hash = self.class.hash_url(original_url)
-  end
+    def set_original_url_hash
+      self.original_url_hash = self.class.hash_url(original_url)
+    end
 end
