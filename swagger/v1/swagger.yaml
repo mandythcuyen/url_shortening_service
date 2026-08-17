@@ -17,13 +17,13 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/short_link"
+                "$ref": "#/components/schemas/encode_response"
         '422':
           description: when shortening fails
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/error"
+                "$ref": "#/components/schemas/errors"
       requestBody:
         content:
           application/json:
@@ -36,6 +36,32 @@ paths:
                   example: https://example.com
               required:
               - url
+  "/api/v1/decode/{short_code}":
+    get:
+      summary: decodes a short code back to the original URL
+      tags:
+      - ShortLinks
+      parameters:
+      - name: short_code
+        in: path
+        required: true
+        description: Short code, 4 to 10 alphanumeric characters
+        example: GeAi9KU
+        schema:
+          type: string
+      responses:
+        '200':
+          description: when decoding successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/decode_response"
+        '404':
+          description: when short code not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
   "/{short_code}":
     parameters:
     - name: short_code
@@ -64,7 +90,7 @@ paths:
           description: Unsafe URL
 components:
   schemas:
-    short_link:
+    encode_response:
       type: object
       properties:
         short_code:
@@ -74,18 +100,39 @@ components:
           type: string
           example: http://localhost:3000/GeAi9KU
           format: uri
-    error:
+    errors:
       type: object
       properties:
-        error:
+        errors:
           type: array
           items:
             type: string
           example:
           - URL format is invalid
+    decode_response:
+      type: object
+      properties:
+        original_url:
+          type: string
+          format: uri
+          example: https://example.com
+        short_code:
+          type: string
+          example: GeAi9KU
+    error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Short code not found
 servers:
 - url: http://localhost:3000
   variables:
     endPoint:
       default: http://localhost:3000
   description: localhost
+- url: https://demo.mandyseeyoo.com
+  variables:
+    endPoint:
+      default: https://demo.mandyseeyoo.com
+  description: demo

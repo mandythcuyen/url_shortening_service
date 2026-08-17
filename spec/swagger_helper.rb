@@ -25,17 +25,30 @@ RSpec.configure do |config|
       paths: {},
       components: {
         schemas: {
-          short_link: {
+          encode_response: {
             type: :object,
             properties: {
               short_code: { type: :string, example: 'GeAi9KU' },
               short_url: { type: :string, example: 'http://localhost:3000/GeAi9KU', format: :uri }
             }
           },
+          errors: {
+            type: :object,
+            properties: {
+              errors: { type: :array, items: { type: :string }, example: ['URL format is invalid'] }
+            }
+          },
+          decode_response: {
+            type: :object,
+            properties: {
+              original_url: { type: :string, format: :uri, example: 'https://example.com' },
+              short_code: { type: :string, example: 'GeAi9KU' }
+            }
+          },
           error: {
             type: :object,
             properties: {
-              error: { type: :array, items: { type: :string }, example: ['URL format is invalid'] }
+              error: { type: :string, example: 'Short code not found' }
             }
           }
         }
@@ -49,6 +62,15 @@ RSpec.configure do |config|
             },
           },
           description: "localhost",
+        },
+        {
+          url:         "https://demo.mandyseeyoo.com",
+          variables:   {
+            endPoint: {
+              default: "https://demo.mandyseeyoo.com",
+            },
+          },
+          description: "demo",
         },
       ],
     }

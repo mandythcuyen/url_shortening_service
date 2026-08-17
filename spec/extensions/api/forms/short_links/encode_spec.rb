@@ -123,14 +123,15 @@ RSpec.describe Api::Forms::ShortLinks::Encode, type: :form do
     end
 
     context "when url has blocked host" do
-      let(:params) {
-        {
-          "url" => "https://#{%w[localhost 0.0.0.0 ::1 192.168.0.1].sample}",
-        }
-      }
-      it do
-        subject.valid?
-        expect(subject.errors[:base]).to include("URL host is blocked")
+      %w[localhost 0.0.0.0 192.168.0.1 127.0.0.1].each do |blocked|
+        it "rejects #{blocked}" do
+          subject = described_class.new(
+            session_token: session_token,
+            url: "https://#{blocked}/admin"
+          )
+          expect(subject).not_to be_valid
+          expect(subject.errors[:base]).to include("URL host is blocked")
+        end
       end
     end
   end
