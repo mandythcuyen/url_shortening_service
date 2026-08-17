@@ -30,7 +30,7 @@ describe 'Redirects', type: :request, swagger_doc: 'v1/swagger.yaml' do
       end
       
       response '404', 'Short code not found' do
-        let(:short_code) { 'nonexistent' }
+        let(:short_code) { 'NONONO' }
 
         run_test! do |response|
           expect(response).to have_http_status(404)

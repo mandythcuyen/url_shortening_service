@@ -5,6 +5,37 @@ info:
   version: v1
   description: URL shortening service
 paths:
+  "/api/v1/encode":
+    post:
+      summary: shortens an original URL
+      tags:
+      - ShortLinks
+      parameters: []
+      responses:
+        '200':
+          description: when shortening successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/short_link"
+        '422':
+          description: when shortening fails
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  example: https://example.com
+              required:
+              - url
   "/{short_code}":
     parameters:
     - name: short_code
@@ -31,6 +62,27 @@ paths:
           description: Redirect successful
         '404':
           description: Unsafe URL
+components:
+  schemas:
+    short_link:
+      type: object
+      properties:
+        short_code:
+          type: string
+          example: GeAi9KU
+        short_url:
+          type: string
+          example: http://localhost:3000/GeAi9KU
+          format: uri
+    error:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          example:
+          - URL format is invalid
 servers:
 - url: http://localhost:3000
   variables:

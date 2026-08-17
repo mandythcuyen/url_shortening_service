@@ -23,6 +23,23 @@ RSpec.configure do |config|
         description: 'URL shortening service'
       },
       paths: {},
+      components: {
+        schemas: {
+          short_link: {
+            type: :object,
+            properties: {
+              short_code: { type: :string, example: 'GeAi9KU' },
+              short_url: { type: :string, example: 'http://localhost:3000/GeAi9KU', format: :uri }
+            }
+          },
+          error: {
+            type: :object,
+            properties: {
+              error: { type: :array, items: { type: :string }, example: ['URL format is invalid'] }
+            }
+          }
+        }
+      },
       servers: [
         {
           url:         "http://localhost:3000",

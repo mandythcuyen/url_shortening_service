@@ -86,14 +86,9 @@ module Api
           return true if blocked_names.include?(host)
 
           # prevent SSRF, user could shorten links to internal networks to attack internal systems
+          # TODO: define normalize_ip method
           ip = IPAddr.new(host)
-          return true if ip.loopback?
-          return true if ip.private?
-          return true if ip.link_local?
-          return true if ip.to_s == "0.0.0.0"
-          return true if ip.to_s == "::"
-
-          false
+          ip.loopback? || ip.private? || ip.link_local? || ip.to_s == "::"
         rescue IPAddr::InvalidAddressError
           # Not an IP literal, could be a normal domain
           false

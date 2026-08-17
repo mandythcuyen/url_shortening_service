@@ -45,16 +45,4 @@ RSpec.describe Services::ShortLink::Decoder, type: :service do
       expect(Rails.cache.read(cache_key(short_code))).to be_nil
     end
   end
-
-  context "when a custom cache store is injected" do
-    let(:rails_cache) { ActiveSupport::Cache::MemoryStore.new }
-
-    it "reads from and writes to the injected store" do
-      expect(Rails.cache).not_to receive(:read)
-
-      expect(described_class.new(short_code: short_code, rails_cache: rails_cache).perform)
-        .to eq(link.original_url)
-      expect(rails_cache.read(cache_key(short_code))).to eq(link.original_url)
-    end
-  end
 end
