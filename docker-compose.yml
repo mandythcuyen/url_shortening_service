@@ -1,4 +1,4 @@
-name: url_shortening_service
+# name: url_shortening_service
 
 # Production-like stack: Caddy terminates TLS and is the only service exposed to
 # the internet, the Rails app (Thruster + Puma) sits behind it on the private
