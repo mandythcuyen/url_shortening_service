@@ -40,7 +40,7 @@ gem "image_processing", "~> 1.2"
 # gem "rack-cors"
 
 # Result monad, powers the DryCases use case DSL in lib/dry_cases
-gem "dry-monads", "~> 1.9"
+gem "dry-monads", "~> 1.11"
 
 # API documentation
 gem "rswag-api"
